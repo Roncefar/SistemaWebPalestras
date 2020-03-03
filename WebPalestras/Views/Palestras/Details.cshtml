@@ -1,0 +1,50 @@
+﻿@model WebPalestras.Models.Palestra
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Palestra</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dt_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dt_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.duracao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.duracao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TB_LOCAL.nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TB_LOCAL.nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_palestra }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebPalestras.Models.Palestra>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dt_inicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.duracao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TB_LOCAL.nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dt_inicio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duracao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TB_LOCAL.nome)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_palestra }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_palestra }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_palestra })
+        </td>
+    </tr>
+}
+
+</table>

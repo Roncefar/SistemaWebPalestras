@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6fb33033b7c44f09a90aefb826682014" Name="Diagram1">
+        <EntityTypeShape EntityType="palestrasModel.Assento" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="palestrasModel.Reserva" Width="2.125" PointX="7.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="palestrasModel.Local" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="palestrasModel.Palestra" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="palestrasModel.Pessoa" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="palestrasModel.FK__TB_ASSENT__id_lo__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="palestrasModel.FK__TB_ASSENTO_PALES__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="palestrasModel.FK__TB_ASSENT__id_pa__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="palestrasModel.FK__TB_ASSENT__id_pe__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="palestrasModel.FK__TB_PALEST__id_lo__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="palestrasModel.TB_PALESTRANTE" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

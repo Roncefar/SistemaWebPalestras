@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="palestrasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_ASSENTO">
+          <Key>
+            <PropertyRef Name="id_local" />
+            <PropertyRef Name="numero_assento" />
+          </Key>
+          <Property Name="id_local" Type="int" Nullable="false" />
+          <Property Name="numero_assento" Type="smallint" Nullable="false" />
+          <Property Name="fileira" Type="smallint" />
+          <Property Name="consevacao" Type="varchar" MaxLength="256" />
+          <Property Name="tipo" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="TB_ASSENTO_PALESTRA">
+          <Key>
+            <PropertyRef Name="id_palestra" />
+            <PropertyRef Name="id_local" />
+            <PropertyRef Name="numero_assento" />
+          </Key>
+          <Property Name="id_palestra" Type="int" Nullable="false" />
+          <Property Name="id_local" Type="int" Nullable="false" />
+          <Property Name="numero_assento" Type="smallint" Nullable="false" />
+          <Property Name="id_pessoa_reservou" Type="int" />
+          <Property Name="compareceu" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="TB_LOCAL">
+          <Key>
+            <PropertyRef Name="id_local" />
+          </Key>
+          <Property Name="id_local" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="50" />
+          <Property Name="localizacao" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="TB_PALESTRA">
+          <Key>
+            <PropertyRef Name="id_palestra" />
+          </Key>
+          <Property Name="id_palestra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="50" />
+          <Property Name="dt_inicio" Type="datetime" />
+          <Property Name="duracao" Type="int" />
+          <Property Name="id_local" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_PALESTRANTE">
+          <Key>
+            <PropertyRef Name="id_pessoa" />
+            <PropertyRef Name="id_palestra" />
+          </Key>
+          <Property Name="id_pessoa" Type="int" Nullable="false" />
+          <Property Name="id_palestra" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_PESSOA">
+          <Key>
+            <PropertyRef Name="id_pessoa" />
+          </Key>
+          <Property Name="id_pessoa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="10" />
+          <Property Name="hash_senha" Type="varchar" MaxLength="256" />
+          <Property Name="nome" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__TB_ASSENT__id_lo__5070F446">
+          <End Role="TB_LOCAL" Type="Self.TB_LOCAL" Multiplicity="1" />
+          <End Role="TB_ASSENTO" Type="Self.TB_ASSENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_LOCAL">
+              <PropertyRef Name="id_local" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO">
+              <PropertyRef Name="id_local" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_ASSENT__id_pa__5AEE82B9">
+          <End Role="TB_PALESTRA" Type="Self.TB_PALESTRA" Multiplicity="1" />
+          <End Role="TB_ASSENTO_PALESTRA" Type="Self.TB_ASSENTO_PALESTRA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PALESTRA">
+              <PropertyRef Name="id_palestra" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO_PALESTRA">
+              <PropertyRef Name="id_palestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_ASSENT__id_pe__5CD6CB2B">
+          <End Role="TB_PESSOA" Type="Self.TB_PESSOA" Multiplicity="0..1" />
+          <End Role="TB_ASSENTO_PALESTRA" Type="Self.TB_ASSENTO_PALESTRA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PESSOA">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO_PALESTRA">
+              <PropertyRef Name="id_pessoa_reservou" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_ASSENTO_PALES__5BE2A6F2">
+          <End Role="TB_ASSENTO" Type="Self.TB_ASSENTO" Multiplicity="1" />
+          <End Role="TB_ASSENTO_PALESTRA" Type="Self.TB_ASSENTO_PALESTRA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ASSENTO">
+              <PropertyRef Name="id_local" />
+              <PropertyRef Name="numero_assento" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO_PALESTRA">
+              <PropertyRef Name="id_local" />
+              <PropertyRef Name="numero_assento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_PALEST__id_lo__4CA06362">
+          <End Role="TB_LOCAL" Type="Self.TB_LOCAL" Multiplicity="1" />
+          <End Role="TB_PALESTRA" Type="Self.TB_PALESTRA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_LOCAL">
+              <PropertyRef Name="id_local" />
+            </Principal>
+            <Dependent Role="TB_PALESTRA">
+              <PropertyRef Name="id_local" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_PALEST__id_pa__5629CD9C">
+          <End Role="TB_PALESTRA" Type="Self.TB_PALESTRA" Multiplicity="1" />
+          <End Role="TB_PALESTRANTE" Type="Self.TB_PALESTRANTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PALESTRA">
+              <PropertyRef Name="id_palestra" />
+            </Principal>
+            <Dependent Role="TB_PALESTRANTE">
+              <PropertyRef Name="id_palestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_PALEST__id_pe__5535A963">
+          <End Role="TB_PESSOA" Type="Self.TB_PESSOA" Multiplicity="1" />
+          <End Role="TB_PALESTRANTE" Type="Self.TB_PALESTRANTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PESSOA">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="TB_PALESTRANTE">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'soh_pode_palestra_em_local_previamente_definido' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="soh_pode_palestra_em_local_previamente_definido" />-->
+        <EntityContainer Name="palestrasModelStoreContainer">
+          <EntitySet Name="TB_ASSENTO" EntityType="Self.TB_ASSENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ASSENTO_PALESTRA" EntityType="Self.TB_ASSENTO_PALESTRA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_LOCAL" EntityType="Self.TB_LOCAL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_PALESTRA" EntityType="Self.TB_PALESTRA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_PALESTRANTE" EntityType="Self.TB_PALESTRANTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_PESSOA" EntityType="Self.TB_PESSOA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__TB_ASSENT__id_lo__5070F446" Association="Self.FK__TB_ASSENT__id_lo__5070F446">
+            <End Role="TB_LOCAL" EntitySet="TB_LOCAL" />
+            <End Role="TB_ASSENTO" EntitySet="TB_ASSENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_ASSENT__id_pa__5AEE82B9" Association="Self.FK__TB_ASSENT__id_pa__5AEE82B9">
+            <End Role="TB_PALESTRA" EntitySet="TB_PALESTRA" />
+            <End Role="TB_ASSENTO_PALESTRA" EntitySet="TB_ASSENTO_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_ASSENT__id_pe__5CD6CB2B" Association="Self.FK__TB_ASSENT__id_pe__5CD6CB2B">
+            <End Role="TB_PESSOA" EntitySet="TB_PESSOA" />
+            <End Role="TB_ASSENTO_PALESTRA" EntitySet="TB_ASSENTO_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_ASSENTO_PALES__5BE2A6F2" Association="Self.FK__TB_ASSENTO_PALES__5BE2A6F2">
+            <End Role="TB_ASSENTO" EntitySet="TB_ASSENTO" />
+            <End Role="TB_ASSENTO_PALESTRA" EntitySet="TB_ASSENTO_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_PALEST__id_lo__4CA06362" Association="Self.FK__TB_PALEST__id_lo__4CA06362">
+            <End Role="TB_LOCAL" EntitySet="TB_LOCAL" />
+            <End Role="TB_PALESTRA" EntitySet="TB_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_PALEST__id_pa__5629CD9C" Association="Self.FK__TB_PALEST__id_pa__5629CD9C">
+            <End Role="TB_PALESTRA" EntitySet="TB_PALESTRA" />
+            <End Role="TB_PALESTRANTE" EntitySet="TB_PALESTRANTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_PALEST__id_pe__5535A963" Association="Self.FK__TB_PALEST__id_pe__5535A963">
+            <End Role="TB_PESSOA" EntitySet="TB_PESSOA" />
+            <End Role="TB_PALESTRANTE" EntitySet="TB_PALESTRANTE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="palestrasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Assento">
+          <Key>
+            <PropertyRef Name="id_local" />
+            <PropertyRef Name="numero_assento" />
+          </Key>
+          <Property Name="id_local" Type="Int32" Nullable="false" />
+          <Property Name="numero_assento" Type="Int16" Nullable="false" />
+          <Property Name="fileira" Type="Int16" />
+          <Property Name="consevacao" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="tipo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TB_LOCAL" Relationship="Self.FK__TB_ASSENT__id_lo__5070F446" FromRole="TB_ASSENTO" ToRole="TB_LOCAL" />
+          <NavigationProperty Name="TB_ASSENTO_PALESTRA" Relationship="Self.FK__TB_ASSENTO_PALES__5BE2A6F2" FromRole="TB_ASSENTO" ToRole="TB_ASSENTO_PALESTRA" />
+        </EntityType>
+        <EntityType Name="Reserva">
+          <Key>
+            <PropertyRef Name="id_palestra" />
+            <PropertyRef Name="id_local" />
+            <PropertyRef Name="numero_assento" />
+          </Key>
+          <Property Name="id_palestra" Type="Int32" Nullable="false" />
+          <Property Name="id_local" Type="Int32" Nullable="false" />
+          <Property Name="numero_assento" Type="Int16" Nullable="false" />
+          <Property Name="id_pessoa_reservou" Type="Int32" />
+          <Property Name="compareceu" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TB_ASSENTO" Relationship="Self.FK__TB_ASSENTO_PALES__5BE2A6F2" FromRole="TB_ASSENTO_PALESTRA" ToRole="TB_ASSENTO" />
+          <NavigationProperty Name="TB_PALESTRA" Relationship="Self.FK__TB_ASSENT__id_pa__5AEE82B9" FromRole="TB_ASSENTO_PALESTRA" ToRole="TB_PALESTRA" />
+          <NavigationProperty Name="TB_PESSOA" Relationship="Self.FK__TB_ASSENT__id_pe__5CD6CB2B" FromRole="TB_ASSENTO_PALESTRA" ToRole="TB_PESSOA" />
+        </EntityType>
+        <EntityType Name="Local">
+          <Key>
+            <PropertyRef Name="id_local" />
+          </Key>
+          <Property Name="id_local" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="localizacao" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_ASSENTO" Relationship="Self.FK__TB_ASSENT__id_lo__5070F446" FromRole="TB_LOCAL" ToRole="TB_ASSENTO" />
+          <NavigationProperty Name="TB_PALESTRA" Relationship="Self.FK__TB_PALEST__id_lo__4CA06362" FromRole="TB_LOCAL" ToRole="TB_PALESTRA" />
+        </EntityType>
+        <EntityType Name="Palestra">
+          <Key>
+            <PropertyRef Name="id_palestra" />
+          </Key>
+          <Property Name="id_palestra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dt_inicio" Type="DateTime" Precision="3" />
+          <Property Name="duracao" Type="Int32" />
+          <Property Name="id_local" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TB_ASSENTO_PALESTRA" Relationship="Self.FK__TB_ASSENT__id_pa__5AEE82B9" FromRole="TB_PALESTRA" ToRole="TB_ASSENTO_PALESTRA" />
+          <NavigationProperty Name="TB_LOCAL" Relationship="Self.FK__TB_PALEST__id_lo__4CA06362" FromRole="TB_PALESTRA" ToRole="TB_LOCAL" />
+          <NavigationProperty Name="TB_PESSOA" Relationship="Self.TB_PALESTRANTE" FromRole="TB_PALESTRA" ToRole="TB_PESSOA" />
+        </EntityType>
+        <EntityType Name="Pessoa">
+          <Key>
+            <PropertyRef Name="id_pessoa" />
+          </Key>
+          <Property Name="id_pessoa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="hash_senha" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_ASSENTO_PALESTRA" Relationship="Self.FK__TB_ASSENT__id_pe__5CD6CB2B" FromRole="TB_PESSOA" ToRole="TB_ASSENTO_PALESTRA" />
+          <NavigationProperty Name="TB_PALESTRA" Relationship="Self.TB_PALESTRANTE" FromRole="TB_PESSOA" ToRole="TB_PALESTRA" />
+        </EntityType>
+        <Association Name="FK__TB_ASSENT__id_lo__5070F446">
+          <End Role="TB_LOCAL" Type="palestrasModel.Local" Multiplicity="1" />
+          <End Role="TB_ASSENTO" Type="palestrasModel.Assento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_LOCAL">
+              <PropertyRef Name="id_local" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO">
+              <PropertyRef Name="id_local" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_ASSENTO_PALES__5BE2A6F2">
+          <End Role="TB_ASSENTO" Type="palestrasModel.Assento" Multiplicity="1" />
+          <End Role="TB_ASSENTO_PALESTRA" Type="palestrasModel.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ASSENTO">
+              <PropertyRef Name="id_local" />
+              <PropertyRef Name="numero_assento" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO_PALESTRA">
+              <PropertyRef Name="id_local" />
+              <PropertyRef Name="numero_assento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_ASSENT__id_pa__5AEE82B9">
+          <End Role="TB_PALESTRA" Type="palestrasModel.Palestra" Multiplicity="1" />
+          <End Role="TB_ASSENTO_PALESTRA" Type="palestrasModel.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PALESTRA">
+              <PropertyRef Name="id_palestra" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO_PALESTRA">
+              <PropertyRef Name="id_palestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_ASSENT__id_pe__5CD6CB2B">
+          <End Role="TB_PESSOA" Type="palestrasModel.Pessoa" Multiplicity="0..1" />
+          <End Role="TB_ASSENTO_PALESTRA" Type="palestrasModel.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PESSOA">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="TB_ASSENTO_PALESTRA">
+              <PropertyRef Name="id_pessoa_reservou" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_PALEST__id_lo__4CA06362">
+          <End Role="TB_LOCAL" Type="palestrasModel.Local" Multiplicity="1" />
+          <End Role="TB_PALESTRA" Type="palestrasModel.Palestra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_LOCAL">
+              <PropertyRef Name="id_local" />
+            </Principal>
+            <Dependent Role="TB_PALESTRA">
+              <PropertyRef Name="id_local" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TB_PALESTRANTE">
+          <End Role="TB_PALESTRA" Type="palestrasModel.Palestra" Multiplicity="*" />
+          <End Role="TB_PESSOA" Type="palestrasModel.Pessoa" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="palestrasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_ASSENTO" EntityType="palestrasModel.Assento" />
+          <EntitySet Name="TB_ASSENTO_PALESTRA" EntityType="palestrasModel.Reserva" />
+          <EntitySet Name="TB_LOCAL" EntityType="palestrasModel.Local" />
+          <EntitySet Name="TB_PALESTRA" EntityType="palestrasModel.Palestra" />
+          <EntitySet Name="TB_PESSOA" EntityType="palestrasModel.Pessoa" />
+          <AssociationSet Name="FK__TB_ASSENT__id_lo__5070F446" Association="Self.FK__TB_ASSENT__id_lo__5070F446">
+            <End Role="TB_LOCAL" EntitySet="TB_LOCAL" />
+            <End Role="TB_ASSENTO" EntitySet="TB_ASSENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_ASSENTO_PALES__5BE2A6F2" Association="Self.FK__TB_ASSENTO_PALES__5BE2A6F2">
+            <End Role="TB_ASSENTO" EntitySet="TB_ASSENTO" />
+            <End Role="TB_ASSENTO_PALESTRA" EntitySet="TB_ASSENTO_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_ASSENT__id_pa__5AEE82B9" Association="Self.FK__TB_ASSENT__id_pa__5AEE82B9">
+            <End Role="TB_PALESTRA" EntitySet="TB_PALESTRA" />
+            <End Role="TB_ASSENTO_PALESTRA" EntitySet="TB_ASSENTO_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_ASSENT__id_pe__5CD6CB2B" Association="Self.FK__TB_ASSENT__id_pe__5CD6CB2B">
+            <End Role="TB_PESSOA" EntitySet="TB_PESSOA" />
+            <End Role="TB_ASSENTO_PALESTRA" EntitySet="TB_ASSENTO_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_PALEST__id_lo__4CA06362" Association="Self.FK__TB_PALEST__id_lo__4CA06362">
+            <End Role="TB_LOCAL" EntitySet="TB_LOCAL" />
+            <End Role="TB_PALESTRA" EntitySet="TB_PALESTRA" />
+          </AssociationSet>
+          <AssociationSet Name="TB_PALESTRANTE" Association="Self.TB_PALESTRANTE">
+            <End Role="TB_PALESTRA" EntitySet="TB_PALESTRA" />
+            <End Role="TB_PESSOA" EntitySet="TB_PESSOA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="palestrasModelStoreContainer" CdmEntityContainer="palestrasEntities">
+          <EntitySetMapping Name="TB_ASSENTO">
+            <EntityTypeMapping TypeName="palestrasModel.Assento">
+              <MappingFragment StoreEntitySet="TB_ASSENTO">
+                <ScalarProperty Name="id_local" ColumnName="id_local" />
+                <ScalarProperty Name="numero_assento" ColumnName="numero_assento" />
+                <ScalarProperty Name="fileira" ColumnName="fileira" />
+                <ScalarProperty Name="consevacao" ColumnName="consevacao" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ASSENTO_PALESTRA">
+            <EntityTypeMapping TypeName="palestrasModel.Reserva">
+              <MappingFragment StoreEntitySet="TB_ASSENTO_PALESTRA">
+                <ScalarProperty Name="id_palestra" ColumnName="id_palestra" />
+                <ScalarProperty Name="id_local" ColumnName="id_local" />
+                <ScalarProperty Name="numero_assento" ColumnName="numero_assento" />
+                <ScalarProperty Name="id_pessoa_reservou" ColumnName="id_pessoa_reservou" />
+                <ScalarProperty Name="compareceu" ColumnName="compareceu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_LOCAL">
+            <EntityTypeMapping TypeName="palestrasModel.Local">
+              <MappingFragment StoreEntitySet="TB_LOCAL">
+                <ScalarProperty Name="id_local" ColumnName="id_local" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="localizacao" ColumnName="localizacao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PALESTRA">
+            <EntityTypeMapping TypeName="palestrasModel.Palestra">
+              <MappingFragment StoreEntitySet="TB_PALESTRA">
+                <ScalarProperty Name="id_palestra" ColumnName="id_palestra" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="dt_inicio" ColumnName="dt_inicio" />
+                <ScalarProperty Name="duracao" ColumnName="duracao" />
+                <ScalarProperty Name="id_local" ColumnName="id_local" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PESSOA">
+            <EntityTypeMapping TypeName="palestrasModel.Pessoa">
+              <MappingFragment StoreEntitySet="TB_PESSOA">
+                <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="hash_senha" ColumnName="hash_senha" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TB_PALESTRANTE" TypeName="palestrasModel.TB_PALESTRANTE" StoreEntitySet="TB_PALESTRANTE">
+            <EndProperty Name="TB_PALESTRA">
+              <ScalarProperty Name="id_palestra" ColumnName="id_palestra" />
+            </EndProperty>
+            <EndProperty Name="TB_PESSOA">
+              <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
