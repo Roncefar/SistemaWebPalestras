@@ -15,7 +15,7 @@ namespace WebPalestras.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Essa aplicação tem objetivo de gerenciar Palestras";
 
             return View();
         }
